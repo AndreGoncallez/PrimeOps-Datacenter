@@ -103,7 +103,6 @@ Ataque (Red Team)	Kali Linux, Metasploit, Nmap	Testes de penetração e vulnerab
 Defesa (Blue Team)	Wazuh, Suricata, OSSEC	Monitoramento e resposta a incidentes
 Auditoria & Logs	Elastic Stack, Graylog	Correlação e análise forense
 SOAR	TheHive, Cortex, MISP	Automação de resposta a incidentes
-
 ⚡ Procedimentos de Instalação
 1. Instalação do Proxmox VE
 
