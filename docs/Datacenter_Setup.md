@@ -1,6 +1,6 @@
 # 🏗️ Datacenter Setup – PrimeOps Cloud Hybrid Lab
 
-**Idiomas:** [🇧🇷 Português](./Datacenter_Setup.md) | [🇬🇧 English](./Datacenter_Setup.en.md) | [🇮🇹 Italiano](./Datacenter_Setup.it.md)
+**Idiomas:** [🇧🇷 Português](./Datacenter_Setup.md) | [🇬🇧 English](./Datacenter_Setup.EN.md) | [🇮🇹 Italiano](./Datacenter_Setup.IT.md)
 
 ---
 
