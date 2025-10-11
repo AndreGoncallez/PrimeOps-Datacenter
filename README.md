@@ -1,7 +1,7 @@
 # 🧠 Datacenter PrimeOps  
 **Infraestrutura Híbrida Automatizada | Segurança | Cloud | DevOps | Monitoramento**
 
-🌍 [English Version](./README_en.md) | 🇮🇹 [Versione Italiana](./README_it.md)
+🌍 [English Version](./README_EN.md) | 🇮🇹 [Versione Italiana](./README_IT.md)
 
 ---
 
