@@ -162,3 +162,7 @@ bash wazuh-install.sh -a
 
 PrimeOps – Infraestrutura, Automação e Cibersegurança
 Desenvolvimento e documentação: André Gonçalvez
+
+“A automação não é sobre substituir pessoas — é sobre liberar o potencial humano para resolver problemas mais complexos.”
+
+---
