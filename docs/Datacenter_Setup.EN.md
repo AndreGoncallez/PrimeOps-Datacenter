@@ -1,40 +1,80 @@
-🏗️ Datacenter Setup – PrimeOps Cloud Hybrid Lab
+# 🏗️ Datacenter Setup – PrimeOps Cloud Hybrid Lab
 
-Languages: 🇧🇷 Portuguese
-| 🇬🇧 English
-| 🇮🇹 Italiano
-📘 Overview
+[🇧🇷 Português](./README.md) | [🇬🇧 English](./README.en.md) | [🇮🇹 Italiano](./README.it.md)
 
-The PrimeOps Datacenter is designed as a hybrid environment for study, automation, and cybersecurity, using Proxmox VE as the primary hypervisor.
-Its purpose is to provide a complete infrastructure for networking, cybersecurity, cloud computing, and automation labs, integrating on-premises and public cloud environments (AWS, Azure, and Google Cloud).
+---
 
-This document describes the physical and logical structure, as well as the installation, configuration steps, and best practices.
-🧩 Project Structure
-Component	Primary Function	System	Status
-Proxmox VE	Main hypervisor	Debian 12	✅
-VM - Windows Server	Active Directory, DNS, GPO	WinSrv 2022	✅
-VM - Windows 11	Administrative workstation	Win11	✅
-VM - Linux GitLab	Repository and CI/CD server	Ubuntu 24.04	✅
-VM - PFSense	Firewall, VLANs, VPNs, and security policies	FreeBSD	✅
-VM - SIEM/SOAR	Monitoring, log correlation, and automation	Wazuh + TheHive	🔄
-VM - Web Server	Nginx + PHP + Database	Debian	✅
-VM - Cloud Gateway	Bridge with external services (AWS, GCP, Azure)	Debian	🔄
-⚙️ Hardware Configuration
-Resource	Specification
-Physical Host	Intel Xeon 8C/16T, 32 GB RAM
-Storage	SSD 250 GB (system) + 2x HDD 1 TB (data and VMs)
-Network	2x Gigabit interfaces + managed switch
-Virtualization	Proxmox VE 8.2
-🌐 VLAN and Subnet Table
-VLAN	Sector / Function	IP Range	Gateway	Notes
-10	Administration	10.10.10.0/24	10.10.10.1	Management servers
-20	Users / Access	10.10.20.0/24	10.10.20.1	Windows and Linux workstations
-30	Printers	10.10.30.0/24	10.10.30.1	Isolated VLAN
-40	IoT / Devices	10.10.40.0/24	10.10.40.1	Sensors and IoT
-50	Security / SOC	10.10.50.0/24	10.10.50.1	SIEM, SOAR, Wazuh
-60	DMZ / Web / VPN	10.10.60.0/24	10.10.60.1	Public servers
-🗺️ Logical Diagram (conceptual)
+## 📂 PrimeOps Subprojects and Labs (English)
 
+Explore the modules that make up the PrimeOps Datacenter ecosystem:
+
+| Module                         | Description                                                      | Repository                                        |
+| ------------------------------ | ---------------------------------------------------------------- | ------------------------------------------------- |
+| 🧱 **Core Infrastructure**     | Datacenter foundation – Proxmox, networking, VLANs, and storage. | [→ View Project](./core-infrastructure/README.md) |
+| 🔐 **Identity & Access (IAM)** | Active Directory, MFA, RBAC, Zero Trust.                         | [→ View Project](./iam/README.md)                 |
+| ⚙️ **DevSecOps Pipeline**      | Secure CI/CD, scanners, and automated deployments.               | [→ View Project](./devsecops/README.md)           |
+| 🛡️ **Security & SOC**         | Wazuh, TheHive, SOAR, and continuous monitoring.                 | [→ View Project](./soc/README.md)                 |
+| ☁️ **CloudBridge**             | Hybrid integration with AWS, Azure, and GCP.                     | [→ View Project](./cloudbridge/README.md)         |
+| 🌐 **Web & DMZ Services**      | Web servers, APIs, and perimeter security.                       | [→ View Project](./dmz/README.md)                 |
+| 🐧 **Linux Engineering Lab**   | Hardening, automation, and Linux administration.                 | [→ View Project](./linuxlab/README.md)            |
+| 🎯 **Red Team Offensive Lab**  | Penetration testing and offensive simulations.                   | [→ View Project](./offensive-lab/README.md)       |
+| 🧩 **Blue Team Defense Lab**   | Digital forensics and incident response.                         | [→ View Project](./defense-lab/README.md)         |
+| 🎥 **Docs & Media Studio**     | Technical documentation and multimedia production.               | [→ View Project](./docs-studio/README.md)         |
+
+---
+
+# 📘 Overview
+
+The PrimeOps Datacenter is designed as a hybrid environment for study, automation and security, using Proxmox VE as the primary hypervisor.
+
+The objective is to provide a complete infrastructure for networking labs, cybersecurity, cloud computing and automation, integrating on-premises environments with public cloud (AWS, Azure and Google Cloud).
+
+This document describes the physical and logical structure, as well as a step-by-step installation, configuration and recommended practices.
+
+---
+
+## 🧩 Project Structure
+
+| Component           | Primary Function                                    | System          | Status |
+| ------------------- | --------------------------------------------------- | --------------- | ------ |
+| Proxmox VE          | Primary hypervisor                                  | Debian 12       | ✅      |
+| VM - Windows Server | Active Directory, DNS, GPO                          | WinSrv 2022     | ✅      |
+| VM - Windows 11     | Administrative workstation                          | Win11           | ✅      |
+| VM - Linux GitLab   | Repository and CI/CD server                         | Ubuntu 24.04    | ✅      |
+| VM - PFSense        | Firewall, VLANs, VPNs and security rules            | FreeBSD         | ✅      |
+| VM - SIEM/SOAR      | Monitoring, log correlation and automation          | Wazuh + TheHive | 🔄     |
+| VM - Web Server     | Nginx + PHP + Database                              | Debian          | ✅      |
+| VM - Cloud Gateway  | Bridge to external cloud services (AWS, GCP, Azure) | Debian          | 🔄     |
+
+---
+
+## ⚙️ Hardware Configuration
+
+| Resource       | Specification                                |
+| -------------- | -------------------------------------------- |
+| Physical Host  | Intel Xeon 8C/16T, 32 GB RAM                 |
+| Storage        | SSD 250 GB (OS) + 2x HDD 1 TB (data and VMs) |
+| Network        | 2 Gigabit interfaces + managed switch        |
+| Virtualization | Proxmox VE 8.2                               |
+
+---
+
+## 🌐 VLANs and Subnet Table
+
+| VLAN | Sector / Function | IP Range      | Gateway    | Notes                          |
+| ---- | ----------------- | ------------- | ---------- | ------------------------------ |
+| 10   | Administration    | 10.10.10.0/24 | 10.10.10.1 | Management servers             |
+| 20   | Users / Access    | 10.10.20.0/24 | 10.10.20.1 | Windows and Linux workstations |
+| 30   | Printers          | 10.10.30.0/24 | 10.10.30.1 | Isolated VLAN                  |
+| 40   | IoT / Devices     | 10.10.40.0/24 | 10.10.40.1 | Sensors and IoT                |
+| 50   | Security / SOC    | 10.10.50.0/24 | 10.10.50.1 | SIEM, SOAR, Wazuh              |
+| 60   | DMZ / Web / VPN   | 10.10.60.0/24 | 10.10.60.1 | Public-facing servers          |
+
+---
+
+## 🗺️ Logical Diagram (conceptual)
+
+```
                   +-------------------+
                   |    Cloud Hybrid   |
                   | AWS / GCP / Azure |
@@ -50,75 +90,148 @@ VLAN	Sector / Function	IP Range	Gateway	Notes
        | VLAN10 | VLAN20 | VLAN30 | VLAN40 | VLAN50 | VLAN60 |
        |   AD    |  Users | Printers|  IoT  |  SOC   |  DMZ  |
        +-----------------------------------------------------+
+```
 
-💻 PFSense Interface Table
-Interface	VLAN	IP	Function
-LAN0	10	10.10.10.1	Administration
-LAN1	20	10.10.20.1	Users
-LAN2	30	10.10.30.1	Printers
-LAN3	40	10.10.40.1	IoT
-LAN4	50	10.10.50.1	SOC / SIEM
-WAN	60	DHCP / Public	DMZ / External VPN
-🔐 VPN and Security
+---
 
-    Site-to-Site VPN between PFSense and external gateways (Fortinet / AWS / Azure)
+## 💻 PFSense Interfaces Table
 
-    Client VPN (OpenVPN) for secure remote admin access
+| Interface | VLAN | IP            | Function           |
+| --------- | ---- | ------------- | ------------------ |
+| LAN0      | 10   | 10.10.10.1    | Administration     |
+| LAN1      | 20   | 10.10.20.1    | Users              |
+| LAN2      | 30   | 10.10.30.1    | Printers           |
+| LAN3      | 40   | 10.10.40.1    | IoT                |
+| LAN4      | 50   | 10.10.50.1    | SOC / SIEM         |
+| WAN       | 60   | DHCP / Public | DMZ / External VPN |
 
-    Zero Trust Architecture implemented through:
+---
 
-        Identity control (AD + MFA)
+## 🔐 VPN and Security
 
-        VLAN segmentation
+* Site-to-Site VPN between PFSense and external gateways (Fortinet / AWS / Azure).
+* Client VPN (OpenVPN) for secure remote administrator access.
 
-        Continuous monitoring via Wazuh
+Policy: Zero Trust implemented in layers:
 
-        SIEM/SOAR automation and alerting
+* Identity control (AD + MFA)
+* Segmentation via VLANs
+* Continuous monitoring with Wazuh
+* SIEM/SOAR with alerts and automation
 
-    Firewall Rules organized by layers and least-privilege policies
+Firewall rules organized by layers and least-privilege policies.
 
-🧠 Security and Audit Labs
-Lab Type	Tools	Objective
-Attack (Red Team)	Kali Linux, Metasploit, Nmap	Penetration testing and vulnerability assessment
-Defense (Blue Team)	Wazuh, Suricata, OSSEC	Monitoring and incident response
-Audit & Logs	Elastic Stack, Graylog	Correlation and forensic analysis
-SOAR	TheHive, Cortex, MISP	Automated incident response
-⚡ Installation Procedures
-1. Install Proxmox VE
+---
 
-Official ISO: https://www.proxmox.com/en/downloads
+## 🧠 Security and Audit Labs
 
+| Lab Type            | Tools                        | Objective                                        |
+| ------------------- | ---------------------------- | ------------------------------------------------ |
+| Attack (Red Team)   | Kali Linux, Metasploit, Nmap | Penetration testing and vulnerability assessment |
+| Defense (Blue Team) | Wazuh, Suricata, OSSEC       | Monitoring and incident response                 |
+| Audit & Logs        | Elastic Stack, Graylog       | Correlation and forensic analysis                |
+| SOAR                | TheHive, Cortex, MISP        | Automated incident response                      |
+
+---
+
+## ⚡ Installation Procedures
+
+### 1. Install Proxmox VE
+
+Official ISO: [https://www.proxmox.com/en/downloads](https://www.proxmox.com/en/downloads)
+
+```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install proxmox-ve postfix open-iscsi -y
+```
 
-2. Create Virtual Machines
+### 2. Create VMs
 
-    Default name: PXD-SRV-<function>
+* Standard naming: `PXD-SRV-<function>`
+* Use SSD for OS and HDD for VM data
+* Network configured via `vmbr0` with VLAN tagging
 
-    System disks on SSD; data on HDD
+### 3. Install PFSense
 
-    Network configured via vmbr0 with VLAN tagging
+* WAN interface = VLAN60
+* Create LAN interfaces according to VLAN table
+* Enable NAT and DHCP per subnet
 
-3. Install PFSense
+### 4. Site-to-Site VPN
 
-    WAN Interface = VLAN60
+IPSec tunnel configuration with Fortinet/AWS:
 
-    Create LAN interfaces as per VLAN table
+* Phase 1: AES256 / SHA256 / DH14
+* Phase 2: AES256GCM / PFS Group 14
 
-    Enable NAT and DHCP per subnet
+### 5. Deploy Wazuh (SIEM)
 
-4. Site-to-Site VPN
-
-Configure IPSec tunnel between PFSense and Fortinet/AWS gateway:
-
-Phase 1: AES256 / SHA256 / DH14
-Phase 2: AES256GCM / PFS Group 14
-5. Deploy Wazuh (SIEM)
-
+```bash
 curl -sO https://packages.wazuh.com/4.x/wazuh-install.sh
 bash wazuh-install.sh -a
+```
 
-👨‍💻 Developed by
+---
 
-PrimeOps – Infrastructure, Automation & Cybersecurity
-Documentation and architecture by André Gonçalvez
+## 👨‍💻 Developed by
+
+PrimeOps – Infrastructure, Automation and Cybersecurity
+
+Development and documentation: André Gonçalvez
+
+---
+
+---
+
+## 📂 Sottoprogetti e Laboratori PrimeOps (Italiano)
+
+Esplora i moduli che compongono l’ecosistema del Datacenter PrimeOps:
+
+| Modulo                         | Descrizione                                                | Repository                                         |
+| ------------------------------ | ---------------------------------------------------------- | -------------------------------------------------- |
+| 🧱 **Core Infrastructure**     | Fondazione del datacenter – Proxmox, rete, VLAN e storage. | [→ Vedi progetto](./core-infrastructure/README.md) |
+| 🔐 **Identity & Access (IAM)** | Active Directory, MFA, RBAC, Zero Trust.                   | [→ Vedi progetto](./iam/README.md)                 |
+| ⚙️ **DevSecOps Pipeline**      | CI/CD sicuro, scanner e distribuzioni automatizzate.       | [→ Vedi progetto](./devsecops/README.md)           |
+| 🛡️ **Security & SOC**         | Wazuh, TheHive, SOAR e monitoraggio continuo.              | [→ Vedi progetto](./soc/README.md)                 |
+| ☁️ **CloudBridge**             | Integrazione ibrida con AWS, Azure e GCP.                  | [→ Vedi progetto](./cloudbridge/README.md)         |
+| 🌐 **Web & DMZ Services**      | Server web, API e sicurezza perimetrale.                   | [→ Vedi progetto](./dmz/README.md)                 |
+| 🐧 **Linux Engineering Lab**   | Hardening, automazione e amministrazione Linux.            | [→ Vedi progetto](./linuxlab/README.md)            |
+| 🎯 **Red Team Offensive Lab**  | Test di penetrazione e simulazioni offensive.              | [→ Vedi progetto](./offensive-lab/README.md)       |
+| 🧩 **Blue Team Defense Lab**   | Analisi forense digitale e risposta agli incidenti.        | [→ Vedi progetto](./defense-lab/README.md)         |
+| 🎥 **Docs & Media Studio**     | Documentazione tecnica e produzione multimediale.          | [→ Vedi progetto](./docs-studio/README.md)         |
+
+---
+
+# 📘 Panoramica
+
+Il Datacenter PrimeOps è progettato come un ambiente ibrido di studio, automazione e sicurezza, che utilizza Proxmox VE come hypervisor principale.
+
+L'obiettivo è fornire un'infrastruttura completa per laboratori di networking, cybersecurity, cloud computing e automazione, integrando ambienti on-premises con cloud pubblici (AWS, Azure e Google Cloud).
+
+Questo documento descrive la struttura fisica e logica, nonché la procedura passo passo di installazione, configurazione e le pratiche consigliate.
+
+---
+
+## 🧩 Struttura del Progetto
+
+| Componente          | Funzione Principale                                 | Sistema         | Stato |
+| ------------------- | --------------------------------------------------- | --------------- | ----- |
+| Proxmox VE          | Hypervisor principale                               | Debian 12       | ✅     |
+| VM - Windows Server | Active Directory, DNS, GPO                          | WinSrv 2022     | ✅     |
+| VM - Windows 11     | Postazione amministrativa                           | Win11           | ✅     |
+| VM - Linux GitLab   | Server di repository e CI/CD                        | Ubuntu 24.04    | ✅     |
+| VM - PFSense        | Firewall, VLAN, VPN e regole di sicurezza           | FreeBSD         | ✅     |
+| VM - SIEM/SOAR      | Monitoraggio, correlazione log e automazione        | Wazuh + TheHive | 🔄    |
+| VM - Web Server     | Nginx + PHP + Database                              | Debian          | ✅     |
+| VM - Cloud Gateway  | Ponte verso servizi cloud esterni (AWS, GCP, Azure) | Debian          | 🔄    |
+
+---
+
+## ⚙️ Configurazione Hardware
+
+| Risorsa          | Specifica                                 |
+| ---------------- | ----------------------------------------- |
+| Host Fisico      | Intel Xeon 8C/16T, 32 GB RAM              |
+| Storage          | SSD 250 GB (SO) + 2x HDD 1 TB (dati e VM) |
+| Rete             | 2 interfacce Gigabit + switch gestito     |
+| Virtualizzazione | Pro                                       |
