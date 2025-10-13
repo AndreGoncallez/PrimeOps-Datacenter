@@ -4,6 +4,26 @@
 
 ---
 
+## 📂 Subprojetos e Laboratórios PrimeOps
+
+Explore os módulos que compõem o Datacenter PrimeOps:
+
+| Módulo | Descrição | Repositório |
+|--------|------------|-------------|
+| 🧱 **Core Infrastructure** | Base do datacenter – Proxmox, rede, VLANs e storage. | [→ Ver projeto](./core-infrastructure/README.md) |
+| 🔐 **Identity & Access (IAM)** | Active Directory, MFA, RBAC, Zero Trust. | [→ Ver projeto](./iam/README.md) |
+| ⚙️ **DevSecOps Pipeline** | CI/CD seguro, scanners e automação de deploy. | [→ Ver projeto](./devsecops/README.md) |
+| 🛡️ **Security & SOC** | Wazuh, TheHive, SOAR e monitoramento contínuo. | [→ Ver projeto](./soc/README.md) |
+| ☁️ **CloudBridge** | Integração híbrida com AWS, Azure e GCP. | [→ Ver projeto](./cloudbridge/README.md) |
+| 🌐 **Web & DMZ Services** | Servidores web, APIs e segurança perimetral. | [→ Ver projeto](./dmz/README.md) |
+| 🐧 **Linux Engineering Lab** | Hardening, automação e administração Linux. | [→ Ver projeto](./linuxlab/README.md) |
+| 🎯 **Red Team Offensive Lab** | Pentest e simulações ofensivas. | [→ Ver projeto](./offensive-lab/README.md) |
+| 🧩 **Blue Team Defense Lab** | Forense digital e resposta a incidentes. | [→ Ver projeto](./defense-lab/README.md) |
+| 🎥 **Docs & Media Studio** | Documentação técnica e material audiovisual. | [→ Ver projeto](./docs-studio/README.md) |
+
+
+---
+
 ## 📘 Visão Geral
 
 O **Datacenter PrimeOps** foi projetado como um **ambiente híbrido de estudo, automação e segurança**, utilizando o **Proxmox VE** como hypervisor principal.  
