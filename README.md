@@ -1,6 +1,6 @@
 # 🏗️ Datacenter Setup – PrimeOps Cloud Hybrid Lab
 
-**Idiomas:** [🇧🇷 Português](./Datacenter_Setup.md) | [🇬🇧 English](./Datacenter_Setup.EN.md) | [🇮🇹 Italiano](./Datacenter_Setup.IT.md)
+**Idiomas:** [🇧🇷 Português](./README.md) | [🇬🇧 English](./README_EN.md) | [🇮🇹 Italiano](./README_IT.md)
 
 ---
 
@@ -9,42 +9,41 @@
 Explore os módulos que compõem o Datacenter PrimeOps:
 
 | Módulo | Descrição | Repositório |
-|--------|------------|-------------|
-| 🧱 **Core Infrastructure** | Base do datacenter – Proxmox, rede, VLANs e storage. | [→ Ver projeto](./core-infrastructure/README.md) |
-| 🔐 **Identity & Access (IAM)** | Active Directory, MFA, RBAC, Zero Trust. | [→ Ver projeto](./iam/README.md) |
-| ⚙️ **DevSecOps Pipeline** | CI/CD seguro, scanners e automação de deploy. | [→ Ver projeto](./devsecops/README.md) |
-| 🛡️ **Security & SOC** | Wazuh, TheHive, SOAR e monitoramento contínuo. | [→ Ver projeto](./soc/README.md) |
+|--------|------------|--------------|
+| 🧱 **Infraestrutura Core** | Fundação do datacenter – Proxmox, rede, VLANs e armazenamento. | [→ Ver projeto](./core-infrastructure/README.md) |
+| 🔐 **Identidade & Acesso (IAM)** | Active Directory, MFA, RBAC, Zero Trust. | [→ Ver projeto](./iam/README.md) |
+| ⚙️ **Pipeline DevSecOps** | CI/CD seguro, scanners e deploy automatizado. | [→ Ver projeto](./devsecops/README.md) |
+| 🛡️ **Segurança & SOC** | Wazuh, TheHive, SOAR e monitoramento contínuo. | [→ Ver projeto](./soc/README.md) |
 | ☁️ **CloudBridge** | Integração híbrida com AWS, Azure e GCP. | [→ Ver projeto](./cloudbridge/README.md) |
-| 🌐 **Web & DMZ Services** | Servidores web, APIs e segurança perimetral. | [→ Ver projeto](./dmz/README.md) |
-| 🐧 **Linux Engineering Lab** | Hardening, automação e administração Linux. | [→ Ver projeto](./linuxlab/README.md) |
-| 🎯 **Red Team Offensive Lab** | Pentest e simulações ofensivas. | [→ Ver projeto](./offensive-lab/README.md) |
-| 🧩 **Blue Team Defense Lab** | Forense digital e resposta a incidentes. | [→ Ver projeto](./defense-lab/README.md) |
+| 🌐 **Serviços Web & DMZ** | Servidores web, APIs e segurança de perímetro. | [→ Ver projeto](./dmz/README.md) |
+| 🐧 **Laboratório Linux Engineering** | Hardening, automação e administração Linux. | [→ Ver projeto](./linuxlab/README.md) |
+| 🎯 **Laboratório Ofensivo (Red Team)** | Pentest e simulações ofensivas. | [→ Ver projeto](./offensive-lab/README.md) |
+| 🧩 **Laboratório Defensivo (Blue Team)** | Forense digital e resposta a incidentes. | [→ Ver projeto](./defense-lab/README.md) |
 | 🎥 **Docs & Media Studio** | Documentação técnica e material audiovisual. | [→ Ver projeto](./docs-studio/README.md) |
-
 
 ---
 
 ## 📘 Visão Geral
 
-O **Datacenter PrimeOps** foi projetado como um **ambiente híbrido de estudo, automação e segurança**, utilizando o **Proxmox VE** como hypervisor principal.  
-O objetivo é fornecer uma infraestrutura completa para **laboratórios de redes, cibersegurança, cloud computing e automação**, com integração entre ambientes **on-premises e cloud pública (AWS, Azure e Google Cloud)**.
+O **Datacenter PrimeOps** foi projetado como um **ambiente híbrido para aprendizado, automação e segurança**, utilizando o **Proxmox VE** como hipervisor principal.  
+Seu objetivo é oferecer uma infraestrutura completa para **laboratórios de redes, cibersegurança, computação em nuvem e automação**, integrando **ambientes on-premises e de nuvem pública (AWS, Azure e Google Cloud)**.
 
-Este documento descreve a **estrutura física e lógica**, bem como o **passo a passo de instalação, configuração e práticas recomendadas**.
+Este documento descreve a **estrutura física e lógica**, bem como as **etapas de instalação, configuração e boas práticas**.
 
 ---
 
 ## 🧩 Estrutura do Projeto
 
-| Componente              | Função Principal                                   | Sistema | Status |
-|--------------------------|----------------------------------------------------|----------|---------|
-| **Proxmox VE**           | Hypervisor principal                              | Debian 12 | ✅ |
-| **VM - Windows Server**  | Active Directory, DNS, GPO                         | WinSrv 2022 | ✅ |
-| **VM - Windows 11**      | Estação administrativa                             | Win11 | ✅ |
-| **VM - Linux GitLab**    | Servidor de repositórios e CI/CD                  | Ubuntu 24.04 | ✅ |
-| **VM - PFSense**         | Firewall, VLANs, VPNs e regras de segurança        | FreeBSD | ✅ |
-| **VM - SIEM/SOAR**       | Monitoramento, correlação de logs e automação      | Wazuh + TheHive | 🔄 |
-| **VM - Servidor Web**    | Nginx + PHP + Banco de dados                      | Debian | ✅ |
-| **VM - Cloud Gateway**   | Bridge com serviços externos (AWS, GCP, Azure)     | Debian | 🔄 |
+| Componente | Função Principal | Sistema | Status |
+|-------------|------------------|----------|---------|
+| **Proxmox VE** | Hipervisor principal | Debian 12 | ✅ |
+| **VM - Windows Server** | Active Directory, DNS, GPO | WinSrv 2022 | ✅ |
+| **VM - Windows 11** | Estação administrativa | Win11 | ✅ |
+| **VM - Linux GitLab** | Servidor de repositório e CI/CD | Ubuntu 24.04 | ✅ |
+| **VM - PFSense** | Firewall, VLANs, VPNs e regras de segurança | FreeBSD | ✅ |
+| **VM - SIEM/SOAR** | Monitoramento, correlação de logs e automação | Wazuh + TheHive | 🔄 |
+| **VM - Web Server** | Nginx + PHP + Banco de Dados | Debian | ✅ |
+| **VM - Cloud Gateway** | Ponte para serviços externos (AWS, GCP, Azure) | Debian | 🔄 |
 
 ---
 
@@ -54,25 +53,25 @@ Este documento descreve a **estrutura física e lógica**, bem como o **passo a 
 |----------|----------------|
 | Host Físico | Intel Xeon 8C/16T, 32 GB RAM |
 | Armazenamento | SSD 250 GB (sistema) + 2x HDD 1 TB (dados e VMs) |
-| Rede | 2 interfaces Gigabit + switch gerenciável |
+| Rede | 2x interfaces Gigabit + switch gerenciável |
 | Virtualização | Proxmox VE 8.2 |
 
 ---
 
 ## 🌐 Tabela de VLANs e Sub-redes
 
-| VLAN | Setor / Função       | Faixa IP            | Gateway        | Observações |
-|------|----------------------|---------------------|----------------|--------------|
-| 10   | Administração        | 10.10.10.0/24       | 10.10.10.1     | Servidores de gestão |
-| 20   | Usuários / Acesso    | 10.10.20.0/24       | 10.10.20.1     | Estações Windows e Linux |
-| 30   | Impressoras          | 10.10.30.0/24       | 10.10.30.1     | VLAN isolada |
-| 40   | IoT / Dispositivos   | 10.10.40.0/24       | 10.10.40.1     | Sensores e IoT |
-| 50   | Segurança / SOC      | 10.10.50.0/24       | 10.10.50.1     | SIEM, SOAR, Wazuh |
-| 60   | DMZ / Web / VPN      | 10.10.60.0/24       | 10.10.60.1     | Servidores públicos |
+| VLAN | Setor / Função | Faixa IP | Gateway | Observações |
+|------|----------------|-----------|-----------|--------------|
+| 10 | Administração | 10.10.10.0/24 | 10.10.10.1 | Servidores de gerenciamento |
+| 20 | Usuários / Acesso | 10.10.20.0/24 | 10.10.20.1 | Estações Windows e Linux |
+| 30 | Impressoras | 10.10.30.0/24 | 10.10.30.1 | VLAN isolada |
+| 40 | IoT / Dispositivos | 10.10.40.0/24 | 10.10.40.1 | Sensores e dispositivos IoT |
+| 50 | Segurança / SOC | 10.10.50.0/24 | 10.10.50.1 | SIEM, SOAR, Wazuh |
+| 60 | DMZ / Web / VPN | 10.10.60.0/24 | 10.10.60.1 | Servidores públicos |
 
 ---
 
-## 🗺️ Diagrama Lógico (conceitual)
+## 🗺️ Diagrama Lógico (Conceitual)
 
 ```text
                   +-------------------+
@@ -101,68 +100,68 @@ LAN4	50	10.10.50.1	SOC / SIEM
 WAN	60	DHCP / Público	DMZ / VPN externa
 🔐 VPN e Segurança
 
-    VPN Site-to-Site entre o PFSense e gateways externos (Fortinet / AWS / Azure).
+    VPN site-to-site entre PFSense e gateways externos (Fortinet / AWS / Azure).
 
-    VPN Cliente (OpenVPN) para acesso remoto seguro de administradores.
+    VPN de cliente (OpenVPN) para acesso remoto seguro de administradores.
 
-    Política Zero Trust implementada em camadas:
+    Política Zero Trust aplicada em todas as camadas:
 
         Controle de identidade (AD + MFA)
 
-        Segmentação via VLAN
+        Segmentação de rede via VLAN
 
-        Monitoramento contínuo via Wazuh
+        Monitoramento contínuo (Wazuh)
 
         SIEM/SOAR com alertas e automação
 
-    Firewall Rules organizadas por camadas e políticas de menor privilégio.
+    Regras de firewall baseadas em privilégio mínimo e políticas em camadas.
 
 🧠 Laboratórios de Segurança e Auditoria
 Tipo de Lab	Ferramentas	Objetivo
-Ataque (Red Team)	Kali Linux, Metasploit, Nmap	Testes de penetração e vulnerabilidades
-Defesa (Blue Team)	Wazuh, Suricata, OSSEC	Monitoramento e resposta a incidentes
+Ofensivo (Red Team)	Kali Linux, Metasploit, Nmap	Testes de penetração e avaliação de vulnerabilidades
+Defensivo (Blue Team)	Wazuh, Suricata, OSSEC	Monitoramento e resposta a incidentes
 Auditoria & Logs	Elastic Stack, Graylog	Correlação e análise forense
 SOAR	TheHive, Cortex, MISP	Automação de resposta a incidentes
 ⚡ Procedimentos de Instalação
-1. Instalação do Proxmox VE
 
-# ISO oficial: https://www.proxmox.com/en/downloads
+    Instalar Proxmox VE
+    ISO oficial: https://www.proxmox.com/en/downloads
+
 sudo apt update && sudo apt upgrade -y
 sudo apt install proxmox-ve postfix open-iscsi -y
 
-2. Criação das VMs
+Criação das VMs
 
     Nome padrão: PXD-SRV-<função>
 
-    Armazenamento em SSD para SO e HDD para dados
+    Discos do sistema em SSD, dados em HDD
 
-    Rede configurada via vmbr0 com VLAN tag
+    Rede configurada via vmbr0 com VLAN tagging
 
-3. Instalação do PFSense
+Instalar PFSense
 
     Interface WAN = VLAN60
 
-    Interfaces LAN criadas conforme tabela de VLANs
+    Interfaces LAN conforme tabela VLAN
 
-    Habilitar NAT e DHCP conforme sub-rede
+    Ativar NAT e DHCP por sub-rede
 
-4. VPN Site-to-Site
+VPN Site-to-Site
 
-Configuração de túnel IPSec entre PFSense e gateway Fortinet/AWS:
+    Túnel IPSec entre PFSense e gateway Fortinet/AWS:
 
-Phase 1: AES256 / SHA256 / DH14
-Phase 2: AES256GCM / PFS Group 14
+        Fase 1: AES256 / SHA256 / DH14
 
-5. Implantação do Wazuh (SIEM)
+        Fase 2: AES256GCM / PFS Group 14
 
-curl -sO https://packages.wazuh.com/4.x/wazuh-install.sh
-bash wazuh-install.sh -a
+Implantação do Wazuh (SIEM)
+
+    curl -sO https://packages.wazuh.com/4.x/wazuh-install.sh
+    bash wazuh-install.sh -a
 
 👨‍💻 Desenvolvido por
 
 PrimeOps – Infraestrutura, Automação e Cibersegurança
-Desenvolvimento e documentação: André Gonçalvez
+Desenvolvimento e Documentação: André Gonçalvez
 
-“A automação não é sobre substituir pessoas — é sobre liberar o potencial humano para resolver problemas mais complexos.”
-
----
+    “Automação não é sobre substituir pessoas — é sobre liberar o potencial humano para resolver problemas mais complexos.”
